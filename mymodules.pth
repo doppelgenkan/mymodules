@@ -1,0 +1,4 @@
+# <username>は各自のユーザ名を入力
+# このファイルは/Users/<username>/anaconda3/lib/python3.11/site-packagesにおく
+
+/Users/<username>/anaconda3/lib/python3.11/site-packages/mymodules
