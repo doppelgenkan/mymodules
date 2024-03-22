@@ -16,12 +16,7 @@ def studcsv(fn, addfn):
     org_lis = []
     id_lis = []
     dept_lis =[]
-    if len(df.columns) == 3:
-        name_arr = df.iloc[:, 1:3].to_numpy().T
-    elif len(df.columns) == 2:
-        name_arr = np.array([k.split('　') for k in (df.iloc[:,1])]).T
-    else:
-        return f'error: columns of dataframe {fn} must be at least 2.'
+    name_arr = np.array([k.split('　') for k in (df.iloc[:,1])]).T
 
     
     for id_num in df.iloc[:,0]:
