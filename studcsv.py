@@ -16,13 +16,12 @@ def studcsv(fn, addfn):
     org_lis = []
     id_lis = []
     dept_lis =[]
-    if len(df.columns) == 3:
+    if len(df.columns) >= 3:
         name_arr = df.iloc[:, 1:3].to_numpy().T
     elif len(df.columns) == 2:
         name_arr = np.array([k.split('　') for k in (df.iloc[:,1])]).T
     else:
-        return f'error: columns of dataframe {fn} must be at least 2.'
-
+        pass
     
     for id_num in df.iloc[:,0]:
 
@@ -45,9 +44,6 @@ def studcsv(fn, addfn):
         else:
             top = 'unknown'
             dept = '存在しない'
-
-        #print(id_num[2:4])
-        #print(top)
 
         # ----- Emailアドレス生成とそのリスト -----
         email = top + id_num[:2] + id_num[4:] + '@stud.tumh.ac.jp'
