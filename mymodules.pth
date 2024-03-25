@@ -1,6 +1,9 @@
-# 概要 : これは mymodules フォルダのパスのパスを通すための設定ファイルです。
-# 1. <username> は各自のloginユーザ名に書き直す。
-# 2. mymodules フォルダは /Users/<username>/anaconda3/lib/python3.11/site-packages におく。
-# 3. このファイル自体は /Users/<username>/anaconda3/lib/python3.11/site-packages におく。
+# 概要 : これは mymodules フォルダのパスを通すための設定ファイルです。
+# セクション1. 9行目のパスの書き直す箇所
+#   1-1. <username> は各自のloginユーザ名に書き直す。
+#   1-2. pyhton<ver>の<ver>は/Users/<username>/anaconda3/lib/python...のバージョン番号（...）に書き直す（例：python3.11）
+# セクション2. 置き場所
+#   2-1. mymodules フォルダは /Users/<username>/anaconda3/lib/python<ver>/site-packages におく。
+#   2-2. このファイル自体は /Users/<username>/anaconda3/lib/python<ver>/site-packages におく。
 
-/Users/<username>/anaconda3/lib/python3.11/site-packages/mymodules
+/Users/<username>/anaconda3/lib/python<ver>/site-packages/mymodules
