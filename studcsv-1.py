@@ -7,7 +7,7 @@ import sys
 
 
 def studcsv(fn, addfn):
-    ### org = '/takarazuka'
+    org = '/takarazuka'
     if addfn == None:
         addfn = 'users'
     df = pd.read_csv(fn, header=None, skiprows=1)
@@ -27,33 +27,23 @@ def studcsv(fn, addfn):
 
         # ----- 学科識別とユーザーネーム上2文字の置き換え -----
         if id_num[2:4] == ('1P' or '1Ｐ'):
-            org = '/takarazuka'
             top = 'pt'
             dept = '理学療法'
         elif id_num[2:4] == ('1A' or '1Ａ'):
-            org = '/takarazuka'
             top = 'am'
             dept = '鍼灸'
         elif id_num[2:4] == ('1J' or '1Ｊ'):
-            org = '/takarazuka'
             top = 'jt'
             dept = '柔道整復'
         elif id_num[2:4] == ('1D' or '1Ｄ'):
-            org = '/takarazuka'
             top = 'dh'
             dept = '口腔保健'
         elif id_num[2:4] == ('SW' or 'ＳＷ'):
-            org = '/takarazuka'
             top = 'sw'
             dept = '社会福祉養成課程'
-        elif id_num[2:4] == ('3T' or '3Ｔ'):  #未定
-            org = '/miyakojima'
-            top = 'tr'
-            dept = '観光'
         else:
-            org = '/unknown'
-            top = 'uk'
-            dept = '不明'
+            top = 'unknown'
+            dept = '存在しない'
 
         # ----- Emailアドレス生成とそのリスト -----
         email = top + id_num[:2] + id_num[4:] + '@stud.tumh.ac.jp'
