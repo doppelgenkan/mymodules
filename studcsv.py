@@ -6,7 +6,9 @@ import random
 import sys
 
 
-def studcsv(fn, addfn):
+# --- ファイルfnは学籍番号と姓名（または姓と名）からなるCSVファイル（左の項目行がなければならない）---
+
+def studcsv(fn, addfn):  # fn=入力CSVファイル名, addfn=出力CSVファイル名（option, デフォルト users）
     ### org = '/takarazuka'
     if addfn == None:
         addfn = 'users'
@@ -16,9 +18,9 @@ def studcsv(fn, addfn):
     org_lis = []
     id_lis = []
     dept_lis =[]
-    if len(df.columns) >= 3:
+    if len(df.columns) >= 3:    # 姓と名のが異なる列にあるとき
         name_arr = df.iloc[:, 1:3].to_numpy().T
-    elif len(df.columns) == 2:
+    elif len(df.columns) == 2:  # 「姓　名」が同一列にあり，かつ姓と名が全角空白で区切られているとき
         name_arr = np.array([k.split('　') for k in (df.iloc[:,1])]).T
     else:
         pass

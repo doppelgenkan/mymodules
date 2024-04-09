@@ -7,18 +7,18 @@ import sys
 
 
 def studcsv(fn, addfn):
-    ### org = '/takarazuka'
+    org = '/takarazuka'
     if addfn == None:
         addfn = 'users'
-    df = pd.read_csv(fn, header=None, skiprows=1)  # ファイルfnは学籍番号と姓名（または姓と名）からなるCSVファイル（項目列=ヘッダあり）
+    df = pd.read_csv(fn, header=None, skiprows=1)
     email_lis = []
     pw_lis = []
     org_lis = []
     id_lis = []
     dept_lis =[]
-    if len(df.columns) >= 3:    # 姓と名のが異なる列にあるとき
+    if len(df.columns) >= 3:
         name_arr = df.iloc[:, 1:3].to_numpy().T
-    elif len(df.columns) == 2:  # 「姓　名」が同一列にあり，かつ姓と名が全角空白で区切られているとき
+    elif len(df.columns) == 2:
         name_arr = np.array([k.split('　') for k in (df.iloc[:,1])]).T
     else:
         pass
@@ -27,33 +27,23 @@ def studcsv(fn, addfn):
 
         # ----- 学科識別とユーザーネーム上2文字の置き換え -----
         if id_num[2:4] == ('1P' or '1Ｐ'):
-            org = '/takarazuka'
             top = 'pt'
             dept = '理学療法'
         elif id_num[2:4] == ('1A' or '1Ａ'):
-            org = '/takarazuka'
             top = 'am'
             dept = '鍼灸'
         elif id_num[2:4] == ('1J' or '1Ｊ'):
-            org = '/takarazuka'
             top = 'jt'
             dept = '柔道整復'
         elif id_num[2:4] == ('1D' or '1Ｄ'):
-            org = '/takarazuka'
             top = 'dh'
             dept = '口腔保健'
         elif id_num[2:4] == ('SW' or 'ＳＷ'):
-            org = '/takarazuka'
             top = 'sw'
             dept = '社会福祉養成課程'
-        elif id_num[2:4] == ('3T' or '3Ｔ'):  #未定
-            org = '/miyakojima'
-            top = 'tr'
-            dept = '観光'
         else:
-            org = '/unknown'
-            top = 'uk'
-            dept = '不明'
+            top = 'unknown'
+            dept = '存在しない'
 
         # ----- Emailアドレス生成とそのリスト -----
         email = top + id_num[:2] + id_num[4:] + '@stud.tumh.ac.jp'
