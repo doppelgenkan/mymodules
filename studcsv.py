@@ -92,6 +92,9 @@ def studcsv(fn, addfn):  # fn=入力CSVファイル名, addfn=出力CSVファイ
     mk_df.to_csv(f'/Users/me/Downloads/{addfn}', index=False)
 
 
+
+# ---  $ python -m studcsv readfile <writefile>  ---
+
 if __name__ == '__main__':
     try:
         fn = sys.argv[1]
