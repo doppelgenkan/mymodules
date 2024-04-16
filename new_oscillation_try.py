@@ -86,9 +86,9 @@ def frq_and_power(arr, ini_frq, fin_frq, hz=1000, rmDC=True):   #周波数とパ
     arr : 1D-ndarray
         サンプリングデータ配列. 1D-numpy配列.
     ini_frq : float
-        低周波カットオフ周波数. ini_fr以上のスペクトルを残す.
+        低周波カットオフ周波数. ini_frq以上のスペクトルを残す.
     fin_frq : float
-        高周波カットオフ周波数. fin_fr以下のスペクトルを残す.
+        高周波カットオフ周波数. fin_frq以下のスペクトルを残す.
     hz : int, optional (1000)
         サンプル周波数. デフォルトで1000[Hz].
     rmDC : bool, optional (True)
@@ -112,9 +112,9 @@ def mpf(arr, ini_frq, fin_frq, hz=1000, rmDC=True):    # add rmDC=True
     arr : 1D-ndarray
         サンプリングデータ配列. 1D-numpy配列.
     ini_frq : float
-        低周波カットオフ周波数. ini_fr以上のスペクトルを残す.
+        低周波カットオフ周波数. ini_frq以上のスペクトルを残す.
     fin_frq : float
-        高周波カットオフ周波数. fin_fr以下のスペクトルを残す.
+        高周波カットオフ周波数. fin_frq以下のスペクトルを残す.
     hz : int, optional (1000)
         サンプル周波数. デフォルトで1000[Hz].
     rmDC : bool, optional (True)
@@ -134,9 +134,9 @@ def mp(arr, ini_frq, fin_frq, hz=1000, rmDC=True):    # add rmDC=True
     arr : 1D-ndarray
         サンプリングデータ配列. 1D-numpy配列.
     ini_frq : float
-        低周波カットオフ周波数. ini_fr以上のスペクトルを残す.
+        低周波カットオフ周波数. ini_frq以上のスペクトルを残す.
     fin_frq : float
-        高周波カットオフ周波数. fin_fr以下のスペクトルを残す.
+        高周波カットオフ周波数. fin_frq以下のスペクトルを残す.
     hz : int, optional (1000)
         サンプル周波数. デフォルトで1000[Hz].
     rmDC : bool, optional (True)
@@ -156,9 +156,9 @@ def pp(arr, ini_frq, fin_frq, hz=1000, rmDC=True):
     arr : 1D-ndarray
         サンプリングデータ配列. 1D-numpy配列.
     ini_frq : float
-        低周波カットオフ周波数. ini_fr以上のスペクトルを残す.
+        低周波カットオフ周波数. ini_frq以上のスペクトルを残す.
     fin_frq : float
-        高周波カットオフ周波数. fin_fr以下のスペクトルを残す.
+        高周波カットオフ周波数. fin_frq以下のスペクトルを残す.
     hz : int, optional (1000)
         サンプル周波数. デフォルトで1000[Hz].
     rmDC : bool, optional (True)
@@ -178,9 +178,9 @@ def ppf(arr, ini_frq, fin_frq, hz=1000, rmDC=True):
     arr : 1D-ndarray
         サンプリングデータ配列. 1D-numpy配列.
     ini_frq : float
-        低周波カットオフ周波数. ini_fr以上のスペクトルを残す.
+        低周波カットオフ周波数. ini_frq以上のスペクトルを残す.
     fin_frq : float
-        高周波カットオフ周波数. fin_fr以下のスペクトルを残す.
+        高周波カットオフ周波数. fin_frq以下のスペクトルを残す.
     hz : int, optional (1000)
         サンプル周波数. デフォルトで1000[Hz].
     rmDC : bool, optional (True)
