@@ -4,77 +4,77 @@ from scipy.fft import *
 from scipy.signal import convolve
 
 
-##### バンドパスフィルター群 #####
+##### index探索 #####
 
-def frq(k, num, hz=1000):   # num is data length
-    return k * hz / num
+def nearestidx(arr, val):
+    """
+    Return int 
+        データ配列arrからvalで指定したターゲット値に最も近い値のindex.
+        
+    Parameters
+    ----------
+    arr: 1D-ndarray
+        データ配列
+    val: float
+        ターゲット値
+    """
+    return np.argmin(np.abs(arr - val))
 
 
-def ini_kc(fr, num, hz=1000):
-    return int(np.ceil(fr * num / hz))
-
-
-def fin_kc(fr, num, hz=1000):
-    return int(np.floor(fr * num / hz))
-
-
-def _partialFFT(arr, k0, k1, rmDC=True):   # 波数k0〜k1のFFT(k0, k1は自然数),  add rmDC=True
-    num = len(arr)
-    Fk = fft(arr) / num
-    # Fk = fft(arr, norm="forward")      #Scipy ver.1.6以上
-    if rmDC == True:     # add
-        Fk[0] = 0             # add
-    Fk[:k0] = 0           # index = 0, 1, 2, ... k0-1 の要素を0に (低振動数カット...左片側)
-    Fk[num-k0+1:] = 0   # index = len(arr)-k1+1, len(arr)-k1+2, ... ,len(arr)-1 の要素を0に (低振動数カット....右片側)
-    Fk[k1+1:num-k1] = 0   # index = k1+1, k1+2, ... len(arr)-(k1-1) の要素を0に （高周波数カット）
-    return Fk
-
+##### 部分的FFT ####
 
 def partialFFT(arr, ini_frq, fin_frq, hz=1000, rmDC=True):    # add rmDC=True
     """
     Return 周波数範囲を指定したFFTスペクトル1D-ndarray.
-
+    
     Parameters
     ----------
     arr : 1D-ndarray
         サンプリングデータ配列. 1D-ndarray.
     ini_frq : float
-        低周波カットオフ周波数. ini_frq以上のスペクトルを残す.
+        低周波カットオフ周波数. ini_fr以上のスペクトルを残す.
     fin_frq : float
-        高周波カットオフ周波数. fin_frq以下のスペクトルを残す.
+        高周波カットオフ周波数. fin_fr以下のスペクトルを残す.
     hz : int, optional (1000)
         サンプル周波数. デフォルトで1000[Hz].
-    rmDC : bool, optional (True)
-        FFT直流成分を除去するか. デフォルトでTrue(除去).
+    
     """
-    num = len(arr)
-    k0 = ini_kc(ini_frq, num, hz=hz)
-    k1 = fin_kc(fin_frq, num, hz=hz)
-    return _partialFFT(arr, k0, k1, rmDC=rmDC)   # add rmDC=rmDC
+    num = arr.size
+    idx0 = nearestidx(rfftfreq(num, 1/hz), ini_frq)
+    idx1 = nearestidx(rfftfreq(num, 1/hz), fin_frq)
+    Fk = rfft(arr) / num
+    # Fk = rfft(arr, norm="forward")      #Scipy ver.1.6以上
+    if rmDC == True:
+        Fk[0] = 0    # 直流成分カット
+    Fk[:idx0] = 0           # index = 0, 1, 2, ... idx0-1 の要素を0に (低振動数カット)
+    Fk[idx1+1:] = 0    # rfftを用いているので，index = idx0+1, idx1+2, ... の要素を0に (高振動数カット)
+    return Fk
 
+
+##### バンドパスフィルター #####
 
 def bpfilter(arr, ini_frq, fin_frq, hz=1000, rmDC=True):   # 周波数i区間[ini_frq, fin_frq]のバンドパスフィルター
     """
-    Retern バンドパスフィルタを施した1D-ndarray(デフォルト).
-
+    Retern バンドパスフィルタを施した1D-ndarray(デフォルト). 
+        
     Parameters
     ----------
     arr : 1D-ndarray
         サンプリングデータ配列. 1D-numpy配列.
     ini_frq : float
-        低周波カットオフ周波数. ini_frq以上のスペクトルを残す.
+        低周波カットオフ周波数. ini_fr以上のスペクトルを残す.
     fin_frq : float
-        高周波カットオフ周波数. fin_frq以下のスペクトルを残す.
+        高周波カットオフ周波数. fin_fr以下のスペクトルを残す.
     hz : int, optional (1000)
         サンプル周波数. デフォルトで1000[Hz].
-    rmDC : bool, optional (True)
-        FFT直流成分を除去するか. デフォルトでTrue(除去).
     """
-    num = len(arr)
+    num = arr.size
     Fk = partialFFT(arr, ini_frq, fin_frq, hz=hz, rmDC=rmDC)    # add rmDC=rmDC
-    return np.real(ifft(Fk) * num)
+    return np.real(irfft(Fk) * num)
     # return np.real(ifft(Fk, norm="forward"))   #Scipy ver.1.6以上
 
+
+##### FFT解析群 #####
 
 def frq_and_power(arr, ini_frq, fin_frq, hz=1000, rmDC=True):   #周波数とパワー  # add rmDC=True
     """
@@ -320,22 +320,6 @@ def mvstd(arr, ker_num=100, unbiased=True):
     """
     return np.sqrt(mvvar(arr, ker_num=ker_num, unbiased=unbiased))
 
-
-##### その他 #####
-
-def nearestidx(arr, val):
-    """
-    Return int
-        データ配列arrからvalで指定したターゲット値に最も近い値のindex.
-
-    Parameters
-    ----------
-    arr: 1D-ndarray
-        データ配列
-    val: float
-        ターゲット値
-    """
-    return np.argmin(np.abs(arr - val))
 
 
 ##### クラスOscillation #####
