@@ -4,7 +4,7 @@ from scipy.fft import *
 from scipy.signal import convolve
 
 
-##### index探索 #####
+##### 最近値index探索 #####
 
 def nearestidx(arr, val):
     """
@@ -32,9 +32,9 @@ def partialFFT(arr, ini_frq, fin_frq, hz=1000, rmDC=True):    # add rmDC=True
     arr : 1D-ndarray
         サンプリングデータ配列. 1D-ndarray.
     ini_frq : float
-        低周波カットオフ周波数. ini_fr以上のスペクトルを残す.
+        低周波カットオフ周波数. ini_frq以上のスペクトルを残す.
     fin_frq : float
-        高周波カットオフ周波数. fin_fr以下のスペクトルを残す.
+        高周波カットオフ周波数. fin_frq以下のスペクトルを残す.
     hz : int, optional (1000)
         サンプル周波数. デフォルトで1000[Hz].
     
@@ -62,16 +62,16 @@ def bpfilter(arr, ini_frq, fin_frq, hz=1000, rmDC=True):   # 周波数i区間[in
     arr : 1D-ndarray
         サンプリングデータ配列. 1D-numpy配列.
     ini_frq : float
-        低周波カットオフ周波数. ini_fr以上のスペクトルを残す.
+        低周波カットオフ周波数. ini_frq以上のスペクトルを残す.
     fin_frq : float
-        高周波カットオフ周波数. fin_fr以下のスペクトルを残す.
+        高周波カットオフ周波数. fin_frq以下のスペクトルを残す.
     hz : int, optional (1000)
         サンプル周波数. デフォルトで1000[Hz].
     """
     num = arr.size
     Fk = partialFFT(arr, ini_frq, fin_frq, hz=hz, rmDC=rmDC)    # add rmDC=rmDC
     return np.real(irfft(Fk) * num)
-    # return np.real(ifft(Fk, norm="forward"))   #Scipy ver.1.6以上
+    # return np.real(irfft(Fk, norm="forward"))   #Scipy ver.1.6以上
 
 
 ##### FFT解析群 #####
